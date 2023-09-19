@@ -3,7 +3,7 @@ interface LocalNames {
   ua: string
 }
 
-export interface Suggestion {
+export interface SearchSuggestion {
   country: string
   lat: number
   local_names: LocalNames
