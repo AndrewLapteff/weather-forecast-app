@@ -1,7 +1,9 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import rerender from 'react-test-renderer' // ES6
-import App, { Container, StartButton } from './App'
+import App from './App'
+import { OpenButton } from './components/StartButtonComponent'
 import 'jest-styled-components'
+import Container from './components/Container'
 
 describe('App.tsx', () => {
   it('should render a container component with "opacity: 0%" if width={0}', () => {
@@ -13,11 +15,11 @@ describe('App.tsx', () => {
     expect(wrapper).toHaveStyleRule('opacity', '100%')
   })
   it('should render a start button component with "display: block" if isdisplayed={1}', () => {
-    const wrapper = rerender.create(<StartButton isdisplayed={1} />).toJSON()
+    const wrapper = rerender.create(<OpenButton isdisplayed={1} />).toJSON()
     expect(wrapper).toHaveStyleRule('display', 'block')
   })
   it('should render a start button component with "display: none" if isdisplayed={0}', () => {
-    const wrapper = rerender.create(<StartButton isdisplayed={0} />).toJSON()
+    const wrapper = rerender.create(<OpenButton isdisplayed={0} />).toJSON()
     expect(wrapper).toHaveStyleRule('display', 'none')
   })
 
