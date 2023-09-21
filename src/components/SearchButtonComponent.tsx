@@ -11,12 +11,19 @@ export const SearchButton = styled.button`
 `
 interface SearchButtonProps {
   searchHandler: () => void
+  resize: () => void
 }
 export const SearchButtonComponent: FC<SearchButtonProps> = ({
   searchHandler,
+  resize,
 }) => {
   return (
-    <SearchButton onClick={searchHandler}>
+    <SearchButton
+      onClick={() => {
+        searchHandler()
+        resize()
+      }}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

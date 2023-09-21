@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import styled, { keyframes } from 'styled-components'
+import { styled, keyframes } from 'styled-components'
 import { ISearchSuggestion } from '../types/SearchSuggestion'
 
 export const List = styled.ul`

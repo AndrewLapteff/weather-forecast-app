@@ -1,5 +1,6 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { styled } from 'styled-components'
+import { SearchButtonComponent } from './SearchButtonComponent'
 
 const Search = styled.input`
   width: 97%;
@@ -14,17 +15,32 @@ const Search = styled.input`
 interface SearchComponentProps {
   searchText: string
   setSearchText: (e: string) => void
+  setIsSearching: (e: boolean) => void
+  resize: () => void
+  searchHandler: () => void
 }
 
 export const SearchComponent: FC<SearchComponentProps> = ({
   searchText,
   setSearchText,
+  setIsSearching,
+  resize,
+  searchHandler,
 }) => {
   return (
-    <Search
-      data-testid="input"
-      value={searchText}
-      onChange={(e) => setSearchText(e.currentTarget.value)}
-    ></Search>
+    <div style={{ display: 'flex' }}>
+      <Search
+        data-testid="input"
+        value={searchText}
+        onChange={(e) => {
+          setSearchText(e.currentTarget.value)
+          setIsSearching(true)
+        }}
+      ></Search>
+      <SearchButtonComponent
+        resize={resize}
+        searchHandler={searchHandler}
+      ></SearchButtonComponent>
+    </div>
   )
 }

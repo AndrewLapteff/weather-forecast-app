@@ -1,20 +1,13 @@
-import { FC, useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { ISearchSuggestion } from './types/SearchSuggestion'
-import {
-  useQuery,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
-import useDebounce from './hooks/useDebounce'
+import { useState } from 'react'
+import { styled } from 'styled-components'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { SearchComponent } from './components/Search'
 import { ListComponent } from './components/List'
 import { OpenButtonComponent } from './components/StartButtonComponent'
-import { IWeatherInfo } from './types/WeatherInfo'
-import { SearchButtonComponent } from './components/SearchButtonComponent'
 import Container from './components/Container'
 import LoadingSearchElement from './components/LoadingSearch'
 import { useForecast } from './hooks/useForecast'
+import Forecast from './components/Forecast'
 
 const AppWrapper = styled.div`
   background-color: #003f84;
@@ -43,8 +36,14 @@ export const queryClient = new QueryClient({
 
 function AppContainer(): JSX.Element {
   const [width, setWidth] = useState<number>(0)
+  const [height, setHeight] = useState<number>(30)
+
   const changeWidth = () => {
-    setWidth((prev) => 40)
+    setWidth(() => 40)
+  }
+  const resize = () => {
+    setHeight(() => 80)
+    setWidth(() => 60)
   }
 
   const {
@@ -53,6 +52,9 @@ function AppContainer(): JSX.Element {
     searchSuggestions,
     onOptionSelect,
     searchHandler,
+    weatherInfo,
+    isSearching,
+    setIsSearching,
   } = useForecast()
 
   return (
@@ -61,31 +63,36 @@ function AppContainer(): JSX.Element {
         width={width}
         changeWidth={changeWidth}
       ></OpenButtonComponent>
-      <Container width={width}>
+      <Container height={height} width={width}>
         <SearchWrapper>
           <SearchComponent
             searchText={searchText}
             setSearchText={setSearchText}
+            setIsSearching={setIsSearching}
+            resize={resize}
+            searchHandler={searchHandler}
           />
-          {searchSuggestions !== undefined ? (
-            searchSuggestions.length !== 0 && (
-              <ListComponent
-                searchSuggestions={searchSuggestions}
-                onOptionSelect={onOptionSelect}
-              ></ListComponent>
-            )
-          ) : (
-            <LoadingSearchElement />
-          )}
-          {searchSuggestions !== undefined ? (
-            searchSuggestions.length === 0 && searchText !== '' ? (
-              <LoadingSearchElement />
-            ) : null
+          {isSearching ? (
+            <>
+              {searchSuggestions !== undefined ? (
+                searchSuggestions.length !== 0 && (
+                  <ListComponent
+                    searchSuggestions={searchSuggestions}
+                    onOptionSelect={onOptionSelect}
+                  ></ListComponent>
+                )
+              ) : (
+                <LoadingSearchElement />
+              )}
+              {searchSuggestions !== undefined ? (
+                searchSuggestions.length === 0 && searchText !== '' ? (
+                  <LoadingSearchElement />
+                ) : null
+              ) : null}
+            </>
           ) : null}
         </SearchWrapper>
-        <SearchButtonComponent
-          searchHandler={searchHandler}
-        ></SearchButtonComponent>
+        <Forecast data={weatherInfo} height={height}></Forecast>
       </Container>
     </AppWrapper>
   )

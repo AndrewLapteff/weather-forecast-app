@@ -10,6 +10,7 @@ const getFromCache = (key: string) => {
 }
 
 export const useForecast = () => {
+  const [ isSearching, setIsSearching ] = useState<boolean>(false)
   const [ searchText, setSearchText ] = useState<string>('')
   const [ clickedSuggestion, setClickedSuggestion ] = useState<ISearchSuggestion>(
     {} as ISearchSuggestion
@@ -17,7 +18,6 @@ export const useForecast = () => {
   const [ weatherInfo, setWeatherInfo ] = useState<IWeatherInfo>(
     {} as IWeatherInfo
   )
-
   const debounceSearch = useDebounce(searchText, 300)
 
   let { data: searchSuggestions } = useQuery({
@@ -38,17 +38,18 @@ export const useForecast = () => {
   const searchHandler = () => {
     if (clickedSuggestion.lat && clickedSuggestion.lon) {
       fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${clickedSuggestion.lat}&lon=${clickedSuggestion.lon}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${clickedSuggestion.lat}&lon=${clickedSuggestion.lon}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
       )
         .then((data) => data.json())
         .then((data) => setWeatherInfo(data))
-    } else {
+    } if (searchSuggestions.length !== 0) {
       fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${searchSuggestions[ 0 ].lat}&lon=${searchSuggestions[ 0 ].lon}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${searchSuggestions[ 0 ].lat}&lon=${searchSuggestions[ 0 ].lon}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
       )
         .then((data) => data.json())
         .then((data) => setWeatherInfo(data))
     }
+    setIsSearching(false)
   }
 
   const onOptionSelect = (suggestion: ISearchSuggestion) => {
@@ -57,7 +58,7 @@ export const useForecast = () => {
   }
 
   useEffect(() => {
-    if (weatherInfo.id) {
+    if (weatherInfo.city) {
       console.log(weatherInfo)
     }
   }, [ weatherInfo ])
@@ -67,6 +68,9 @@ export const useForecast = () => {
     setSearchText,
     searchSuggestions,
     onOptionSelect,
-    searchHandler
+    searchHandler,
+    weatherInfo,
+    isSearching,
+    setIsSearching
   }
 }

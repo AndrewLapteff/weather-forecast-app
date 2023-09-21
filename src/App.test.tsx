@@ -7,11 +7,15 @@ import Container from './components/Container'
 
 describe('App.tsx', () => {
   it('should render a container component with "opacity: 0%" if width={0}', () => {
-    const wrapper = rerender.create(<Container width={0} />).toJSON()
+    const wrapper = rerender
+      .create(<Container height={30} width={0} />)
+      .toJSON()
     expect(wrapper).toHaveStyleRule('opacity', '0%')
   })
   it('should render a container component with "opacity: 100%" if width={40}', () => {
-    const wrapper = rerender.create(<Container width={40} />).toJSON()
+    const wrapper = rerender
+      .create(<Container height={30} width={40} />)
+      .toJSON()
     expect(wrapper).toHaveStyleRule('opacity', '100%')
   })
   it('should render a start button component with "display: block" if isdisplayed={1}', () => {
@@ -33,8 +37,29 @@ describe('App.tsx', () => {
     fireEvent.change(inputElement, { target: { value: 'London' } }) // userEvent.type(input, 'London')
 
     await waitFor(() => {
-      const resultsContainer = screen.getAllByTestId('li')
-      expect(resultsContainer[0]).toHaveTextContent('London, GB')
+      const suggestions = screen.getAllByTestId('li')
+      expect(suggestions[0]).toHaveTextContent('London, GB')
     })
+  })
+
+  it('should update the input value after click on the suggestion button from "london" to "London"', async () => {
+    render(<App />)
+    const inputElement = screen.getByTestId('input')
+
+    const resultsContainer = screen.queryByTestId('li')
+    expect(resultsContainer).toBeNull()
+
+    fireEvent.change(inputElement, { target: { value: 'london' } })
+
+    await waitFor(() => {
+      const suggestions = screen.getAllByTestId('li')
+      checkTheCaseOfTheFirstLetter(suggestions)
+    })
+
+    function checkTheCaseOfTheFirstLetter(suggestions: HTMLElement[]) {
+      fireEvent.click(suggestions[0])
+      expect(inputElement).not.toHaveValue('london')
+      expect(inputElement).toHaveValue('London')
+    }
   })
 })
