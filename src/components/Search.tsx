@@ -27,6 +27,10 @@ export const SearchComponent: FC<SearchComponentProps> = ({
   resize,
   searchHandler,
 }) => {
+  const onSearch = () => {
+    resize()
+    searchHandler()
+  }
   return (
     <div style={{ display: 'flex' }}>
       <Search
@@ -36,11 +40,9 @@ export const SearchComponent: FC<SearchComponentProps> = ({
           setSearchText(e.currentTarget.value)
           setIsSearching(true)
         }}
+        onKeyUp={(e) => (e.key === 'Enter' ? onSearch() : null)}
       ></Search>
-      <SearchButtonComponent
-        resize={resize}
-        searchHandler={searchHandler}
-      ></SearchButtonComponent>
+      <SearchButtonComponent onSearch={onSearch}></SearchButtonComponent>
     </div>
   )
 }

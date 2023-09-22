@@ -5,3 +5,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
   position: absolute;
 }
+
+::-webkit-scrollbar {
+  height: 6px;
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: #1f1f1fb4;
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #888; /* Color of the scrollbar thumb */
+}
+
+/* Style the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the thumb on hover */
+}

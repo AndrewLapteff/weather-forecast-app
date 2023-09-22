@@ -10,18 +10,13 @@ export const SearchButton = styled.button`
   background-color: white;
 `
 interface SearchButtonProps {
-  searchHandler: () => void
-  resize: () => void
+  onSearch: () => void
 }
-export const SearchButtonComponent: FC<SearchButtonProps> = ({
-  searchHandler,
-  resize,
-}) => {
+export const SearchButtonComponent: FC<SearchButtonProps> = ({ onSearch }) => {
   return (
     <SearchButton
       onClick={() => {
-        searchHandler()
-        resize()
+        onSearch()
       }}
     >
       <svg
