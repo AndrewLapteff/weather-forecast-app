@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { IconType } from '../../types/IconType'
 
-const Pressure: FC<IconType> = ({ width, height }): JSX.Element => (
+const PressureIcon: FC<IconType> = ({ width, height }): JSX.Element => (
   <svg
     width={width}
     height={height}
@@ -13,4 +13,4 @@ const Pressure: FC<IconType> = ({ width, height }): JSX.Element => (
   </svg>
 )
 
-export default Pressure
+export default PressureIcon

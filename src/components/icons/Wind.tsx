@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { IconType } from '../../types/IconType'
 
-const Wind: FC<IconType> = ({ height, width }): JSX.Element => (
+const WindIcon: FC<IconType> = ({ height, width }): JSX.Element => (
   <svg
     width={width}
     height={height}
@@ -13,4 +13,4 @@ const Wind: FC<IconType> = ({ height, width }): JSX.Element => (
   </svg>
 )
 
-export default Wind
+export default WindIcon

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { IconType } from '../../types/IconType'
 
-const Humidity: FC<IconType> = ({ height, width }): JSX.Element => (
+const HumidityIcon: FC<IconType> = ({ height, width }): JSX.Element => (
   <svg
     width={width}
     height={height}
@@ -19,4 +19,4 @@ const Humidity: FC<IconType> = ({ height, width }): JSX.Element => (
   </svg>
 )
 
-export default Humidity
+export default HumidityIcon

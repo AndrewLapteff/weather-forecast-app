@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { IconType } from '../../types/IconType'
 
-const Precipitation: FC<IconType> = ({ width, height }): JSX.Element => (
+const PopIcon: FC<IconType> = ({ width, height }): JSX.Element => (
   <svg
     width={width}
     height={height}
@@ -19,4 +19,4 @@ const Precipitation: FC<IconType> = ({ width, height }): JSX.Element => (
   </svg>
 )
 
-export default Precipitation
+export default PopIcon
