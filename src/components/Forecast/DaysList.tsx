@@ -5,6 +5,7 @@ import { degreeIcon, round } from '../Forecast'
 interface Props {
   data: IWeatherInfo
 }
+
 const Day = styled.div`
   display: flex;
   justify-content: center;

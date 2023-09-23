@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import rerender from 'react-test-renderer' // ES6
+import rerender, { act } from 'react-test-renderer' // ES6
 import App from './App'
 import { OpenButton } from './components/StartButtonComponent'
 import 'jest-styled-components'

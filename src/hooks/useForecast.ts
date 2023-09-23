@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { ISearchSuggestion } from "../types/SearchSuggestion"
 import { IWeatherInfo } from "../types/WeatherInfo"
 import useDebounce from "./useDebounce"
@@ -36,18 +36,22 @@ export const useForecast = () => {
   })
 
   const searchHandler = () => {
-    if (clickedSuggestion.lat && clickedSuggestion.lon) {
-      fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${clickedSuggestion.lat}&lon=${clickedSuggestion.lon}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
-      )
-        .then((data) => data.json())
-        .then((data) => setWeatherInfo(data))
-    } if (searchSuggestions.length !== 0) {
-      fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${searchSuggestions[ 0 ].lat}&lon=${searchSuggestions[ 0 ].lon}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
-      )
-        .then((data) => data.json())
-        .then((data) => setWeatherInfo(data))
+    try {
+      if (clickedSuggestion.lat && clickedSuggestion.lon) {
+        fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${clickedSuggestion.lat}&lon=${clickedSuggestion.lon}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
+        )
+          .then((data) => data.json())
+          .then((data) => setWeatherInfo(data))
+      } if (searchSuggestions.length !== 0) {
+        fetch(
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${searchSuggestions[ 0 ].lat}&lon=${searchSuggestions[ 0 ].lon}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
+        )
+          .then((data) => data.json())
+          .then((data) => setWeatherInfo(data))
+      }
+    } catch (error) {
+      console.log('error')
     }
     setIsSearching(false)
   }
@@ -57,11 +61,6 @@ export const useForecast = () => {
     setSearchText(suggestion.name)
   }
 
-  useEffect(() => {
-    if (weatherInfo.city) {
-      console.log(weatherInfo)
-    }
-  }, [ weatherInfo ])
 
   return {
     searchText,

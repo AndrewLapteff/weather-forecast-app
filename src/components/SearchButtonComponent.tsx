@@ -15,6 +15,7 @@ interface SearchButtonProps {
 export const SearchButtonComponent: FC<SearchButtonProps> = ({ onSearch }) => {
   return (
     <SearchButton
+      data-testid="searchButton"
       onClick={() => {
         onSearch()
       }}

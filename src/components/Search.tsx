@@ -28,9 +28,12 @@ export const SearchComponent: FC<SearchComponentProps> = ({
   searchHandler,
 }) => {
   const onSearch = () => {
-    resize()
-    searchHandler()
+    if (searchText !== '') {
+      resize()
+      searchHandler()
+    }
   }
+
   return (
     <div style={{ display: 'flex' }}>
       <Search

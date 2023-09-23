@@ -21,7 +21,7 @@ const Temperature: FC<Props> = ({ data }) => {
   }
   return (
     <>
-      <Title>
+      <Title data-testid="title">
         {data.city.name}, {data.city.country}
       </Title>
       <TemperatureElement>
